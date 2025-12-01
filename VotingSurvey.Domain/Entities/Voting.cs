@@ -32,8 +32,8 @@ public sealed class Voting
         IsPublished = true; // per requirement publish on creation
     }
 
-    public static Voting Create(Guid id, Guid communityId, Guid createdByUserId, string title, string questionDescription, VotingWindow window, DateTimeOffset now)
-        => new(id, communityId, createdByUserId, title, questionDescription, window, now);
+    public static Voting Create(Guid communityId, Guid createdByUserId, string title, string questionDescription, VotingWindow window, DateTimeOffset now)
+        => new(Guid.NewGuid(), communityId, createdByUserId, title, questionDescription, window, now);
 
     private static string ValidateTitle(string value)
     {

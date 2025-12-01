@@ -7,7 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Settings\" />
+    <Folder Include="Models\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+    <Folder Include="Settings\Behaviors\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />
+    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VotingSurvey.Domain\VotingSurvey.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Settings\" />
+    <ProjectReference Include="..\VotingSurvey.Application\VotingSurvey.Application.csproj" />
+    <ProjectReference Include="..\VotingSurvey.Infrastructure\VotingSurvey.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

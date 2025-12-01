@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VotingSurvey.Application.Interfaces;
 using VotingSurvey.Domain.Entities;
 
 namespace VotingSurvey.Infrastructure.Persistence.Context
 {
-    public class DataBaseContext(DbContextOptions<DataBaseContext> context) : DbContext(context)
+    public class DataBaseContext(DbContextOptions<DataBaseContext> context) : DbContext(context), IDataBaseContext
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<Community> Communities => Set<Community>();
@@ -11,6 +12,7 @@ namespace VotingSurvey.Infrastructure.Persistence.Context
         public DbSet<UserUnit> UserUnits => Set<UserUnit>();
         public DbSet<Voting> Votings => Set<Voting>();
         public DbSet<Vote> Votes => Set<Vote>();
+        public DbSet<VotingRecipient> VotingRecipients => Set<VotingRecipient>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
