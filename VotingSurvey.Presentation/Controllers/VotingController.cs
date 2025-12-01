@@ -11,7 +11,7 @@ namespace VotingSurvey.Presentation.Controllers
     [Route("api/[controller]")]
     public class VotingController : ApiBaseController
     {
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateVoting request, [FromHeader(Name = "UserId")] Guid userId)
         {
             request = request with { CreatedById = userId };
