@@ -4,7 +4,7 @@ using VotingSurvey.Domain.Entities;
 
 namespace VotingSurvey.Infrastructure.Persistence.Context
 {
-    public class DataBaseContext(DbContextOptions<DataBaseContext> context) : DbContext(context), IDataBaseContext
+    public class DataBaseContext(DbContextOptions<DataBaseContext> context) : DbContext(context)
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<Community> Communities => Set<Community>();
