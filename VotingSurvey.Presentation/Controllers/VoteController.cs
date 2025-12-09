@@ -11,7 +11,7 @@ namespace VotingSurvey.Presentation.Controllers
     public class VoteController : ApiBaseController
     {
         [HttpPost("{votingId:guid}")]
-        public async Task<IActionResult> Select([FromQuery] Guid votingId, [FromBody] SelectVote request, [FromHeader(Name = "UserId")] Guid userId)
+        public async Task<IActionResult> Select([FromRoute] Guid votingId, [FromBody] SelectVote request, [FromHeader(Name = "UserId")] Guid userId)
         {
             request = request with { VotingId = votingId, UserId = userId };
             var result = await Sender.Send(request);
@@ -19,7 +19,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpPut("{votingId:guid}/confirm")]
-        public async Task<IActionResult> Confirm([FromQuery] Guid votingId, [FromBody] ConfirmVote request, [FromHeader(Name = "UserId")] Guid userId)
+        public async Task<IActionResult> Confirm([FromRoute] Guid votingId, [FromBody] ConfirmVote request, [FromHeader(Name = "UserId")] Guid userId)
         {
             request = request with { VotingId = votingId, UserId = userId };
             var result = await Sender.Send(request);
@@ -27,7 +27,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpGet("{votingId:guid}/status")]
-        public async Task<IActionResult> Status([FromQuery] Guid votingId, [FromHeader(Name = "UserId")] Guid userId)
+        public async Task<IActionResult> Status([FromRoute] Guid votingId, [FromHeader(Name = "UserId")] Guid userId)
         {
             var query = new GetUserVoteStatus { VotingId = votingId, UserId = userId };
             var result = await Sender.Send(query);

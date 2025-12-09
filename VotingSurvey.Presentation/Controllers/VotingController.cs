@@ -20,7 +20,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpPost("{id:guid}/recipients")]
-        public async Task<IActionResult> AddRecipients([FromQuery] Guid id, [FromBody] AddRecipients request)
+        public async Task<IActionResult> AddRecipients([FromRoute] Guid id, [FromBody] AddRecipients request)
         {
             request = request with { VotingId = id };
             var result = await Sender.Send(request);
@@ -28,7 +28,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}/edit")]
-        public async Task<IActionResult> Edit([FromQuery] Guid id, [FromBody] EditVotingBeforeStart request)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] EditVotingBeforeStart request)
         {
             request = request with { VotingId = id };
             var result = await Sender.Send(request);
@@ -36,7 +36,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}/extend-end")]
-        public async Task<IActionResult> ExtendEnd([FromQuery] Guid id, [FromBody] ExtendVotingEnd request)
+        public async Task<IActionResult> ExtendEnd([FromRoute] Guid id, [FromBody] ExtendVotingEnd request)
         {
             request = request with { VotingId = id };
             var result = await Sender.Send(request);
@@ -44,7 +44,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}/close-early")]
-        public async Task<IActionResult> CloseEarly([FromQuery] Guid id, [FromBody] CloseVotingEarly request, [FromHeader(Name = "UserId")] Guid adminId)
+        public async Task<IActionResult> CloseEarly([FromRoute] Guid id, [FromBody] CloseVotingEarly request, [FromHeader(Name = "UserId")] Guid adminId)
         {
             request = request with { VotingId = id, AdminId = adminId };
             var result = await Sender.Send(request);
@@ -52,7 +52,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetDetail([FromQuery] Guid id, [FromHeader(Name = "UserId")] Guid? userId)
+        public async Task<IActionResult> GetDetail([FromRoute] Guid id, [FromHeader(Name = "UserId")] Guid? userId)
         {
             var query = new GetVotingDetail { VotingId = id, UserId = userId };
             var result = await Sender.Send(query);
@@ -76,7 +76,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/participants")]
-        public async Task<IActionResult> Participants([FromQuery] Guid id)
+        public async Task<IActionResult> Participants([FromRoute] Guid id)
         {
             var query = new ListVotingParticipants { VotingId = id };
             var result = await Sender.Send(query);
@@ -84,7 +84,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/participants-separated")]
-        public async Task<IActionResult> ParticipantsSeparated([FromQuery] Guid id)
+        public async Task<IActionResult> ParticipantsSeparated([FromRoute] Guid id)
         {
             var query = new GetVotingParticipantsSeparated { VotingId = id };
             var result = await Sender.Send(query);
@@ -92,7 +92,7 @@ namespace VotingSurvey.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/recipients")]
-        public async Task<IActionResult> Recipients([FromQuery] Guid id, [FromHeader(Name = "UserId")] Guid adminId)
+        public async Task<IActionResult> Recipients([FromRoute] Guid id, [FromHeader(Name = "UserId")] Guid adminId)
         {
             var query = new AdminGetVotingRecipients { VotingId = id, AdminId = adminId };
             var result = await Sender.Send(query);

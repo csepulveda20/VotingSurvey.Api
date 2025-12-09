@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VotingSurvey.Application.Interfaces;
 using VotingSurvey.Domain.Entities;
 
 namespace VotingSurvey.Infrastructure.Persistence.Context
