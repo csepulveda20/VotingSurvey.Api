@@ -6,12 +6,14 @@ namespace VotingSurvey.Infrastructure.Persistence.Context
     public class DataBaseContext(DbContextOptions<DataBaseContext> context) : DbContext(context)
     {
         public DbSet<User> Users => Set<User>();
+        public DbSet<UserRole>UserRoles => Set<UserRole>();
         public DbSet<Community> Communities => Set<Community>();
         public DbSet<Unit> Units => Set<Unit>();
         public DbSet<UserUnit> UserUnits => Set<UserUnit>();
         public DbSet<Voting> Votings => Set<Voting>();
         public DbSet<Vote> Votes => Set<Vote>();
         public DbSet<VotingRecipient> VotingRecipients => Set<VotingRecipient>();
+        public DbSet<Role> Roles => Set<Role>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

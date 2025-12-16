@@ -20,7 +20,7 @@ internal class AdminDashboardSummaryHandler : IRequestHandler<AdminDashboardSumm
         var isAdmin = await _userRepo.HasRoleAsync(request.AdminId, "ADMIN", cancellationToken);
         if (!isAdmin) return ApiResponse<(int upcoming, int active, int closed)>.Failure(new[] { "Only ADMIN can view dashboard" });
         var now = DateTimeOffset.UtcNow;
-        var all = await _votingRepo.ListByCreatorAsync(request.AdminId, new(), cancellationToken);
+        var all = await _votingRepo.ListByCreatorAsync(request.AdminId, new QueryParam(), cancellationToken);
         var upcoming = all.Count(v => now < v.Window.StartsAt);
         var active = all.Count(v => now >= v.Window.StartsAt && now <= v.Window.EndsAt);
         var closed = all.Count(v => now > v.Window.EndsAt);

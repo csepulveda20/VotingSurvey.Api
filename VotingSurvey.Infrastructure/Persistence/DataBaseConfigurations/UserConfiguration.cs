@@ -9,27 +9,22 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> b)
     {
-        b.ToTable("User", "dbo");
-        b.HasKey(x => x.Id);
-        b.Property(x => x.Id).HasColumnName("UserId");
-        b.Property(x => x.IsActive).HasColumnName("IsActive").IsRequired();
-        b.Property<DateTimeOffset>("CreatedAt").HasColumnName("CreatedAt");
+        b.ToTable("User");
+        b.HasKey(u => u.Id);
+        b.Property(u => u.Id).HasColumnName("UserId");
 
-        // PersonName: multi-field VO -> keep as owned/complex
-        b.OwnsOne(x => x.Name, n =>
+        b.OwnsOne(u => u.Name, nb =>
         {
-            n.Property(p => p.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired();
-            n.Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired();
+            nb.Property(p => p.FirstName).HasColumnName("FirstName").HasMaxLength(100);
+            nb.Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(100);
         });
 
-        // EmailAddress: single-field VO -> map with ValueConverter to a scalar column
-        b.Property(x => x.Email)
-            .HasColumnName("Email")
-            .HasMaxLength(256)
-            .HasConversion(
-                email => email.Value,
-                value => EmailAddress.Create(value)
-            )
-            .IsRequired();
+        b.OwnsOne(u => u.Email, eb =>
+        {
+            eb.Property(e => e.Value).HasColumnName("Email").HasMaxLength(256);
+        });
+
+        b.Navigation(u => u.Name).IsRequired();
+        b.Navigation(u => u.Email).IsRequired();
     }
 }

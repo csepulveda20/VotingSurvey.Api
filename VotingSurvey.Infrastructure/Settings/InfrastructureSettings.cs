@@ -15,8 +15,7 @@ namespace VotingSurvey.Infrastructure.Settings
         {
 
             serviceCollection.AddDbContext<DataBaseContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"))
-            );
+                options.UseSqlServer(configuration.GetConnectionString("DataBaseConnection")));
 
             serviceCollection.AddScoped<ICommunity, CommunityRepository>();
             serviceCollection.AddScoped<IVote, VoteRepository>();

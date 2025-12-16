@@ -7,20 +7,22 @@ public sealed class Voting
     private readonly List<Vote> _votes = new();
     private readonly HashSet<Guid> _recipients = new();
 
-    public Guid Id { get; }
-    public Guid CommunityId { get; }
-    public Guid CreatedByUserId { get; }
-    public string Title { get; private set; }
-    public string QuestionDescription { get; private set; }    
-    public VotingWindow Window { get; private set; }
+    public Guid Id { get; private set; }
+    public Guid CommunityId { get; private set; }
+    public Guid CreatedByUserId { get; private set; }
+    public string Title { get; private set; } = default!;
+    public string QuestionDescription { get; private set; } = default!;
+    public VotingSurvey.Domain.ValueObjects.VotingWindow Window { get; private set; } = default!;
     public bool IsPublished { get; private set; }
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset? UpdatedAt { get; private set; }
-
-    public IReadOnlyCollection<Guid> Recipients => _recipients;
     public IReadOnlyCollection<Vote> Votes => _votes;
 
-    private Voting(Guid id, Guid communityId, Guid createdByUserId, string title, string questionDescription, VotingWindow window, DateTimeOffset createdAt)
+    // Constructor sin parámetros para EF Core
+    private Voting() { }
+
+    // Constructor de dominio para crear la entidad
+    public Voting(Guid id, Guid communityId, Guid createdByUserId, string title, string questionDescription, VotingWindow window, DateTimeOffset createdAt)
     {
         Id = id;
         CommunityId = communityId;
@@ -29,11 +31,21 @@ public sealed class Voting
         QuestionDescription = ValidateQuestion(questionDescription);
         Window = window;
         CreatedAt = createdAt;
-        IsPublished = true; // per requirement publish on creation
+        IsPublished = true;
     }
 
     public static Voting Create(Guid communityId, Guid createdByUserId, string title, string questionDescription, VotingWindow window, DateTimeOffset now)
-        => new(Guid.NewGuid(), communityId, createdByUserId, title, questionDescription, window, now);
+    {
+        return new Voting(
+            Guid.NewGuid(),
+            communityId,
+            createdByUserId,
+            title,
+            questionDescription,
+            window,
+            now
+        );
+    }
 
     private static string ValidateTitle(string value)
     {

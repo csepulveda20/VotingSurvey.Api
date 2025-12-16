@@ -12,5 +12,5 @@ public sealed class UserRepository(DataBaseContext context) : IUser
         => _context.Users.AnyAsync(u => u.Id == userId && u.IsActive, cancellationToken);
 
     public Task<bool> HasRoleAsync(Guid userId, string roleCode, CancellationToken cancellationToken = default)
-        => _context.Set<dynamic>().AnyAsync(_ => false, cancellationToken); // TODO: map Role & UserRole tables
+        => _context.Users.AnyAsync(u => u.UserRoles.Any(ur => ur.UserId == userId && ur.RoleId == roleCode), cancellationToken);
 }
